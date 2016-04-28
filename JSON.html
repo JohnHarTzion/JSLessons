@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<div id="demo"><h2></h2></div>
+<table id = "id01"></table>
+
+
+<body onload="loadDoc()">
+
+<script>
+function loadDoc() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+
+    if (xhttp.readyState == 4 && xhttp.status == 200) {
+    	var jason = JSON.parse(xhttp.responseText)
+    	var teams = jason.query.results.league.standings.teams.team
+    	myFunction(teams)
+ 
+    	
+
+    	console.log(teams)
+
+    	function myFunction(response) {
+    		var arr = response
+    		var out = "<table>";
+
+    		for (i = 0; i<9; i++){
+    			out += "<tr><td>" +
+    			arr[i].team_standings.rank +
+    			"</td><td>" + 
+    			arr[i].name+
+    			"</td><td>" + 
+    			arr[i].team_points.total
+    			"</td></tr>"
+    		}
+    		out += "</table>";
+    		document.getElementById("id01").innerHTML = out
+
+    	}
+
+    	}
+
+  };
+
+  xhttp.open("GET", "fantasy.json", true);
+  xhttp.send();
+
+}
+
+
+</script>
+
+<table id = id01></table>
+
+
+</body>
+</html>
